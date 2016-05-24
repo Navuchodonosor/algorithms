@@ -18,34 +18,29 @@
 """
 
 
-def max_heapify(seq, i, n):
-    l = 2 * i + 1
-    r = 2 * i + 2
-
-    if l <= n and seq[l] > seq[i]:
-        largest = l
-    else:
-        largest = i
-    if r <= n and seq[r] > seq[largest]:
-        largest = r
-
-    if largest != i:
-        seq[i], seq[largest] = seq[largest], seq[i]
-        max_heapify(seq, largest, n)
-
-
-def build_heap(seq):
-    n = len(seq) - 1
-    for i in range(n/2, -1, -1):
-        max_heapify(seq, i, n)
-
-
-def sort(seq):
-    build_heap(seq)
-    heap_size = len(seq) - 1
-    for x in range(heap_size, 0, -1):
-        seq[0], seq[x] = seq[x], seq[0]
-        heap_size = heap_size - 1
-        max_heapify(seq, 0, heap_size)
-
-    return seq
+def heapSort(array):
+    
+    def shiftDown (object, i, j):
+ 
+        n_el= object[i]
+        while 2*i+1 < j:
+            Child = 2*i+1
+            if Child+1 < j and object[Child] < object[Child+1]:
+               Child+= 1
+            if n_el >= object[Child]:
+               break
+            object[i] = object[Child]
+            i = Child
+        object[i] = n_el
+    
+    leng = len(array)
+    for i in range(leng//2-1,-1,-1):
+        shiftDown(array, i, leng)
+        
+    for i in range(leng-1, 0, -1):
+        temp= array[i]
+        array[i]=array[0]
+        array[0]= temp
+        shiftDown(array,0,i)
+    
+    return array
